@@ -1,0 +1,486 @@
+:root {
+    --bg: #050508;
+    --surface: #0d0d14;
+    --panel: #111118;
+    --border: #1e1e2e;
+    --accent: #00ffe0;
+    --accent2: #37e11d;
+    --accent3: #ffe600;
+    --text: #e0e0f0;
+    --muted: #555570;
+    --glow: 0 0 20px rgba(7, 137, 122, 0.4);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* Background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(0,255,224,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,224,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  /* Header */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0 30px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 6px;
+    color: var(--accent);
+    text-shadow: var(--glow);
+  }
+
+  .logo span { color: var(--accent2); }
+
+  .status-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+    display: inline-block;
+    margin-right: 8px;
+    animation: pulse 1.5s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .live-badge {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 2px;
+  }
+
+  /* Visualizer Canvas */
+  .visualizer-wrap {
+    margin: 30px 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  #visualizer {
+    width: 100%;
+    height: 200px;
+    display: block;
+  }
+
+  .vis-label {
+    position: absolute;
+    top: 10px; left: 14px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 2px;
+  }
+
+  /* Waveform */
+  #waveform {
+    width: 100%;
+    height: 80px;
+    display: block;
+    background: var(--panel);
+    border-top: 1px solid var(--border);
+  }
+
+  /* Controls Row */
+  .controls-row {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 24px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    padding: 10px 24px;
+    border: 1px solid var(--accent);
+    background: transparent;
+    color: var(--accent);
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 2px;
+    text-transform: uppercase;
+  }
+
+  .btn:hover, .btn.active {
+    background: var(--accent);
+    color: var(--bg);
+    box-shadow: var(--glow);
+  }
+
+  .btn.danger {
+    border-color: var(--accent2);
+    color: var(--accent2);
+  }
+
+  .btn.danger:hover, .btn.danger.active {
+    background: var(--accent2);
+    color: #b70a0a;
+    box-shadow: 0 0 20px rgba(48, 137, 173, 0.4);
+  }
+
+  .volume-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+  }
+
+  .vol-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 2px;
+  }
+
+  input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+    width: 100px;
+  }
+
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    cursor: pointer;
+  }
+
+  /* EQ Section */
+  .eq-section {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+
+  .section-title {
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    color: var(--muted);
+    font-family: 'Share Tech Mono', monospace;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+
+  .eq-grid {
+    display: flex;
+    gap: 16px;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .eq-band {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+  }
+
+  .eq-value {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    min-width: 40px;
+    text-align: center;
+  }
+
+  .eq-slider-wrap {
+    position: relative;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  input[type=range].vertical {
+    writing-mode: vertical-lr;
+    direction: rtl;
+    -webkit-appearance: slider-vertical;
+    appearance: slider-vertical;
+    width: 3px;
+    height: 140px;
+    background: var(--border);
+    cursor: pointer;
+    outline: none;
+  }
+
+  /* Fallback for browsers that don't support slider-vertical */
+  input[type=range].vertical:not([orient]) {
+    transform: rotate(-90deg);
+    width: 140px;
+    height: 3px;
+  }
+
+  input[type=range].vertical::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 2px;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+    cursor: pointer;
+  }
+
+  .eq-freq {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  .eq-center-line {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    height: 1px;
+    background: var(--border);
+    pointer-events: none;
+  }
+
+  /* Presets */
+  .presets {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+
+  .preset-btn {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 2px;
+    text-transform: uppercase;
+  }
+
+  .preset-btn:hover, .preset-btn.active {
+    border-color: var(--accent3);
+    color: var(--accent3);
+    box-shadow: 0 0 10px rgba(255,230,0,0.2);
+  }
+
+  /* Effects */
+  .effects-row {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .effect-card {
+    flex: 1;
+    min-width: 140px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 16px;
+  }
+
+  .effect-card .effect-name {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+
+  .knob-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .knob {
+    width: 50px; height: 50px;
+    border-radius: 50%;
+    background: conic-gradient(var(--accent) 0deg, var(--border) 0deg);
+    border: 2px solid var(--border);
+    position: relative;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+  }
+
+  .knob:hover { box-shadow: 0 0 14px rgba(0,255,224,0.3); }
+
+  .knob::after {
+    content: '';
+    position: absolute;
+    top: 6px; left: 50%;
+    transform: translateX(-50%);
+    width: 3px; height: 10px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  .knob-val {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+  }
+
+  /* Info Bar */
+  .info-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 10px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .info-item {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 2px;
+  }
+
+  .info-item span { color: var(--accent); }
+
+  /* Drop zone */
+  .drop-zone {
+    border: 1px dashed var(--border);
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 24px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .drop-zone:hover, .drop-zone.dragover {
+    border-color: var(--accent);
+    background: rgba(25, 171, 154, 0.03);
+  }
+
+  .drop-zone p {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 2px;
+  }
+
+  .drop-zone p span { color: var(--accent); cursor: pointer; }
+
+  #file-input { display: none; }
+
+  /* Track info */
+  .track-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+  }
+
+  .track-icon {
+    font-size: 1.8rem;
+    line-height: 1;
+  }
+
+  .track-meta { flex: 1; }
+
+  .track-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+
+  .track-sub {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 2px;
+  }
+
+  .progress-bar {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    margin-top: 8px;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.1s;
+    box-shadow: 0 0 6px var(--accent);
+  }
+
+  @media (max-width: 600px) {
+    .eq-grid { gap: 8px; }
+    .eq-slider-wrap { height: 120px; }
+    input[type=range].vertical { height: 100px; }
+  }
