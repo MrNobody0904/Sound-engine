@@ -34,33 +34,11 @@ A browser-based, real-time audio equalizer and visualizer built with the Web Aud
 ## File Structure
 
 ```
-├── equalizer-music.html   # Main HTML layout
+├── index.html             # Main HTML layout
 ├── style.css              # All styling and theming
 ├── script.js              # Web Audio API logic and visualizer
 └── README.md              # This file
-```
 
----
-
-## Getting Started
-
-No build step or installation required. Just open the HTML file in a modern browser.
-
-```bash
-# Option 1 — Open directly
-open equalizer-music.html
-
-# Option 2 — Serve locally (recommended to avoid CORS issues)
-npx serve .
-# or
-python3 -m http.server 8080
-```
-
-Then visit `http://localhost:8080` in your browser.
-
-> **Note:** A local server is recommended when loading audio files, as some browsers restrict file access from `file://` URLs.
-
----
 
 ## How to Use
 
