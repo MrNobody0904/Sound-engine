@@ -112,14 +112,3 @@ Audio File / Mic Input
 
 ---
 
-## Known Limitations
-
-- FLAC and some codec variants may not decode in all browsers (MP3 and WAV have widest support).
-- Reverb knob updates the UI but full convolver reverb is not yet wired to a convolver node — it is a UI placeholder ready for extension.
-- No audio export or recording functionality in the current version.
-
----
-
-## License
-
-MIT — free to use, modify, and distribute.
